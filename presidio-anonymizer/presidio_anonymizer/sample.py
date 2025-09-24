@@ -29,4 +29,4 @@ def sample_run_anonymizer():
     # ]
 
 if __name__ == "__main__": 
-    result = sample_run_anonymizer();
+    sample_run_anonymizer();
