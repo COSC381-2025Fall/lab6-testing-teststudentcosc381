@@ -285,6 +285,26 @@ def test_given_negative_start_or_endpoint_then_we_fail(start, end):
         create_recognizer_result("entity", 0, start, end)
 
 
+@pytest.mark.parametrize( # grading 1: they should use parametrize here to list all the test cases
+    # fmt: off
+    "entity1_start, entity1_end, entity2_start, entity2_end, intersects",
+    [
+        (0, 5, 4, 5, 1), # grading 4.1: have a case where self.end < other.start or other.end < self.start
+        (0, 5, 3, 8, 2), # grading 4.2: have a case where self.end >= other.start and other.end >= self.start
+        (1, 2, 3, 4, 0), # grading 5.1: have a case with no overlap
+        (1, 5, 1, 5, 4), # grading 5.2: have a case with full overlap
+        (1, 5, 2, 4, 2), # grading 5.3: have a case with complete containment
+        (1, 5, 5, 6, 0), # grading 5.4: have a case with exact-touch boundaries
+    ],
+    # fmt: on
+)
+def test_intersects(entity1_start, entity1_end, entity2_start, entity2_end, intersects):
+    first = create_recognizer_result("entity", 0, entity1_start, entity1_end) # grading 2: they need to use create_recognizer_result to create entities
+    second = create_recognizer_result("entity", 0, entity2_start, entity2_end)
+
+    assert first.intersects(second) == intersects # grading 3: they need to have an assert to check the result
+
+
 def create_recognizer_result(entity_type: str, score: float, start: int, end: int):
     data = {"entity_type": entity_type, "score": score, "start": start, "end": end}
     return RecognizerResult.from_json(data)
