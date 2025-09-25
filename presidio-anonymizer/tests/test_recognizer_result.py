@@ -284,7 +284,7 @@ def test_given_negative_start_or_endpoint_then_we_fail(start, end):
     ):
         create_recognizer_result("entity", 0, start, end)
 
-
+# grading 0: the test method should be placed right before the last method "create_recognizer_result"
 @pytest.mark.parametrize( # grading 1: they should use parametrize here to list all the test cases
     # fmt: off
     "entity1_start, entity1_end, entity2_start, entity2_end, intersects",
